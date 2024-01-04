@@ -113,4 +113,14 @@ return require('packer').startup(function(use)
         requires = { 'nvim-tree/nvim-web-devicons' }
     }
     use "lukas-reineke/indent-blankline.nvim"
+    use {
+        "aznhe21/actions-preview.nvim",
+        config = function()
+            vim.keymap.set({ "v", "n" }, "gf", require("actions-preview").code_actions)
+        end,
+    }
+    use({
+        'Wansmer/treesj',
+        requires = { 'nvim-treesitter/nvim-treesitter' },
+    })
 end)
