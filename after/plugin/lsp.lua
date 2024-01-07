@@ -44,6 +44,13 @@ require("mason-lspconfig").setup({
                 end
             }
         end,
+        ["omnisharp"] = function()
+            lspconfig.omnisharp.setup {
+                on_attach = function()
+                    n.notify { "CSharp Lsp attached!" }
+                end
+            }
+        end
     }
 })
 
