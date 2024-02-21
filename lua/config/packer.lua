@@ -123,4 +123,5 @@ return require('packer').startup(function(use)
         'Wansmer/treesj',
         requires = { 'nvim-treesitter/nvim-treesitter' },
     })
+    use ({ 'windwp/nvim-projectconfig' })
 end)
