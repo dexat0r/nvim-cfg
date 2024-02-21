@@ -3,15 +3,15 @@ cmp.setup({
     mapping = cmp.mapping.preset.insert({
         ['<CR>'] = cmp.mapping.confirm({ select = false }),
         ['<C-s>'] = cmp.mapping.complete({ reason = cmp.ContextReason.Auto }),
-        [';'] = cmp.mapping(function(fallback)
+        [':'] = cmp.mapping(function(fallback)
             local status_ok, luasnip = pcall(require, "luasnip")
             if status_ok and luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()
             else
-                fallback()
+                return fallback()
             end
         end, { "i", "s" }),
-        ["<C-;>"] = cmp.mapping(function(fallback)
+        ["<C-:>"] = cmp.mapping(function(fallback)
             local status_ok, luasnip = pcall(require, "luasnip")
             if not status_ok then
                 return fallback()
@@ -30,10 +30,10 @@ cmp.setup({
         completeopt = 'menu,menuone,noinsert'
     },
     sources = {
-        -- snippets
-        { name = 'luasnip' },
         -- lsp suggestions
         { name = 'nvim_lsp' },
+        -- snippets
+        { name = 'luasnip' },
         { name = 'path' },
         { name = 'cmd' },
     },

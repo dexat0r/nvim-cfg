@@ -25,22 +25,29 @@ require("mason-lspconfig").setup({
             })
         end,
         ["tsserver"] = function()
+            local api = require("typescript-tools.api")
             require("typescript-tools").setup {
                 on_attach = function() n.notify { "Typescript Lsp attached" } end,
                 settings = {
                     separate_diagnostic_server = false,
-                    publish_diagnostic_on = "insert_leave",
+                    -- publish_diagnostic_on = "change",
                     tsserver_locale = "ru",
                     complete_function_calls = true,
                     include_completions_with_insert_text = true,
                     code_lense = true
+                },
+                handlers = {
+                    ["textDocument/publishDiagnostics"] = api.filter_diagnostics(
+                    -- Ignore 'This may be converted to an async function' diagnostics.
+                        { 80003 }
+                    )
                 }
             }
         end,
         ["jsonls"] = function()
             lspconfig.jsonls.setup {
-                on_attach = function ()
-                   n.notify { "JSON Lsp attached" } 
+                on_attach = function()
+                    n.notify { "JSON Lsp attached" }
                 end
             }
         end,
