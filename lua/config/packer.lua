@@ -85,7 +85,7 @@ return require('packer').startup(function(use)
     use { 'hrsh7th/cmp-nvim-lua' }
     use { 'rcarriga/nvim-notify' }
     use({
-        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        "ErichDonGubler/lsp_lines.nvim",
         config = function()
             require("lsp_lines").setup()
         end,
@@ -122,5 +122,12 @@ return require('packer').startup(function(use)
     use({
         'Wansmer/treesj',
         requires = { 'nvim-treesitter/nvim-treesitter' },
+    })
+    use({
+        "aurum77/live-server.nvim",
+        run = function()
+            require"live_server.util".install()
+        end,
+        cmd = { "LiveServer", "LiveServerStart", "LiveServerStop" },
     })
 end)
