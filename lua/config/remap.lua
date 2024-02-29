@@ -39,4 +39,12 @@ if vim.g.neovide then
   vim.keymap.set('c', '<D-v>', '<C-R>+') -- Paste command mode
   vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli') -- Paste insert mode
   vim.keymap.set('t', '<D-v>', '<C-\\><C-n>"+Pi') -- Paste terminal mode
+
+  vim.keymap.set('n', '<C-s>', ':w<CR>') -- Save windows
+  vim.keymap.set('v', '<A-c>', '"+y') -- Copy windows
+  vim.keymap.set('n', '<A-p>', '"+P') -- Paste normal mode windows
+  vim.keymap.set('v', '<A-p>', '"+P') -- Paste visual mode windows
+  vim.keymap.set('c', '<A-p>', '<C-R>+') -- Paste command mode windows
+  vim.keymap.set('i', '<A-p>', '<ESC>l"+Pli', {noremap = true}) -- Paste insert mode windows
+  vim.keymap.set('t', '<A-p>', '<C-\\><C-n>"+Pi') -- Paste terminal mode windows
 end

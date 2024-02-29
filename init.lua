@@ -12,3 +12,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 8;
 vim.opt.listchars = { space = '·', tab = '→ ' }
+
+vim.opt.equalalways = false
+vim.opt.winfixheight = true
+vim.opt.winfixwidth = true
