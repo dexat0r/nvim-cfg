@@ -131,4 +131,5 @@ return require('packer').startup(function(use)
         cmd = { "LiveServer", "LiveServerStart", "LiveServerStop" },
     })
     use ({ 'windwp/nvim-projectconfig' })
+    use 'famiu/bufdelete.nvim'
 end)
