@@ -11,7 +11,7 @@ autocmd({ "BufEnter" }, {
         ]]
         end
 
-        if (buf_ft == "" or buf_ft == nil) and buf_name == '' then
+        if (buf_ft == "" or buf_ft == nil) and buf_name == '[No Name]' then
             vim.cmd [[nnoremap <silent> <buffer> q :close<CR>set nobuflisted]]
         end
     end,
