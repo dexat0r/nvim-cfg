@@ -15,8 +15,6 @@ require('bufferline').setup({
 
 local status_bufdelete = pcall(require, "bufdelete")
 
-print(status_bufdelete)
-
 if (status_bufdelete) then
     vim.keymap.set("n", "<C-q>", ":Bdelete<cr>")
     vim.keymap.set("n", "<leader>q", ":Bdelete!<cr>")
