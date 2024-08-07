@@ -1,12 +1,12 @@
 local ensure_packer = function()
-  local fn = vim.fn
-  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-  if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-    vim.cmd [[packadd packer.nvim]]
-    return true
-  end
-  return false
+    local fn = vim.fn
+    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+    if fn.empty(fn.glob(install_path)) > 0 then
+        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+        vim.cmd [[packadd packer.nvim]]
+        return true
+    end
+    return false
 end
 
 local packer_bootstrap = ensure_packer()
@@ -84,10 +84,14 @@ return require('packer').startup(function(use)
     use({
         "stevearc/conform.nvim",
     })
-    use {
+
+    use ({
         "folke/trouble.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-    }
+        cmd = "Trouble",
+        opts = {},
+        keys = {}
+    })
+
     use {
         "pmizio/typescript-tools.nvim",
         requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
@@ -137,10 +141,21 @@ return require('packer').startup(function(use)
     use({
         "aurum77/live-server.nvim",
         run = function()
-            require"live_server.util".install()
+            require "live_server.util".install()
         end,
         cmd = { "LiveServer", "LiveServerStart", "LiveServerStop" },
     })
-    use ({ 'windwp/nvim-projectconfig' })
+    use({ 'windwp/nvim-projectconfig' })
     use 'famiu/bufdelete.nvim'
+    use "tiagovla/scope.nvim"
+    use 'ThePrimeagen/vim-be-good'
+    use 'folke/neodev.nvim'
+    use 'f-person/git-blame.nvim'
+    use {
+        "nvim-telescope/telescope-file-browser.nvim",
+        requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+    }
+    use {
+        "Hoffs/omnisharp-extended-lsp.nvim"
+    }
 end)

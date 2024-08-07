@@ -16,7 +16,7 @@ db.setup {
                 key_hl = 'group',
                 key_format = ' [%s]',
                 action = function()
-                    vim.cmd [[:Telescope find_files]]
+                    vim.cmd [[:Telescope file_browser]]
                 end,
             },
             {

@@ -1,4 +1,5 @@
 require("luasnip.loaders.from_vscode").load()
+require("neodev").setup()
 local lsp = require('lsp-zero').preset({})
 local navic = require('nvim-navic')
 local lspconfig = require('lspconfig')
@@ -9,7 +10,14 @@ local n = require('config.notify')
 -- mason-lspconfig for configuring downloaded servers;
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = { 'tsserver' },
+    ensure_installed = {
+        'tsserver',
+        'jsonls',
+        'lua_ls',
+        'omnisharp',
+        'emmet_language_server',
+        'ltex'
+    },
     handlers = {
         lsp.default_setup,
         ["lua_ls"] = function()
@@ -55,7 +63,8 @@ require("mason-lspconfig").setup({
             lspconfig.omnisharp.setup {
                 on_attach = function()
                     n.notify { "CSharp Lsp attached!" }
-                end
+                end,
+                handlers = { ['textDocument/definition'] = require('omnisharp_extended').handler }
             }
         end,
         ["emmet_language_server"] = function()
@@ -88,6 +97,13 @@ require("mason-lspconfig").setup({
                 }
             })
         end,
+        ["ltex"] = function()
+            lspconfig.ltex.setup({
+                on_attach = function()
+                    n.notify { "Spell checker attached!" }
+                end,
+            })
+        end
     }
 })
 

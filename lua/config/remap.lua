@@ -19,7 +19,7 @@ vim.keymap.set("n", "<C-T>", ":rightbelow :Tnew<cr>")
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
 vim.keymap.set("v", "<leader>c", "\"+y")
 
-vim.keymap.set("n", "<leader>t", vim.cmd.Trouble)
+vim.keymap.set("n", "<leader>t", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>")
 
 vim.keymap.set("n", "<C-->", function()
     font.AdjustFontSize(-1)
@@ -33,21 +33,21 @@ end)
 vim.keymap.set("n", "<C-n>", ":enew<cr>")
 
 if vim.g.neovide then
-    vim.keymap.set('n', '<D-s>', ':w<CR>')                      -- Save
-    vim.keymap.set('v', '<D-c>', '"+y')                         -- Copy
-    vim.keymap.set('n', '<D-v>', '"+P')                         -- Paste normal mode
-    vim.keymap.set('v', '<D-v>', '"+P')                         -- Paste visual mode
-    vim.keymap.set('c', '<D-v>', '<C-R>+')                      -- Paste command mode
-    vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli')                 -- Paste insert mode
-    vim.keymap.set('t', '<D-v>', '<C-\\><C-n>"+Pi')             -- Paste terminal mode
+    vim.keymap.set('n', '<D-s>', ':w<CR>')                          -- Save
+    vim.keymap.set('v', '<D-c>', '"+y')                             -- Copy
+    vim.keymap.set('n', '<D-v>', '"+P')                             -- Paste normal mode
+    vim.keymap.set('v', '<D-v>', '"+P')                             -- Paste visual mode
+    vim.keymap.set('c', '<D-v>', '<C-R>+')                          -- Paste command mode
+    vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli')                     -- Paste insert mode
+    vim.keymap.set('t', '<D-v>', '<C-\\><C-n>"+Pi')                 -- Paste terminal mode
 
-    vim.keymap.set('n', '<C-s>', ':w<CR>')                      -- Save windows
-    vim.keymap.set('v', '<A-c>', '"+y')                         -- Copy windows
-    vim.keymap.set('n', '<A-p>', '"+P')                         -- Paste normal mode windows
-    vim.keymap.set('v', '<A-p>', '"+P')                         -- Paste visual mode windows
-    vim.keymap.set('c', '<A-p>', '<C-R>+')                      -- Paste command mode windows
+    vim.keymap.set('n', '<C-s>', ':w<CR>')                          -- Save windows
+    vim.keymap.set('v', '<A-c>', '"+y')                             -- Copy windows
+    vim.keymap.set('n', '<A-p>', '"+P')                             -- Paste normal mode windows
+    vim.keymap.set('v', '<A-p>', '"+P')                             -- Paste visual mode windows
+    vim.keymap.set('c', '<A-p>', '<C-R>+')                          -- Paste command mode windows
     vim.keymap.set('i', '<A-p>', '<ESC>l"+Pli', { noremap = true }) -- Paste insert mode windows
-    vim.keymap.set('t', '<A-p>', '<C-\\><C-n>"+Pi')             -- Paste terminal mode windows
+    vim.keymap.set('t', '<A-p>', '<C-\\><C-n>"+Pi')                 -- Paste terminal mode windows
 
     vim.keymap.set('n', '<D-l>', function()
         vim.cmd("vertical resize +1")
@@ -80,4 +80,29 @@ end)
 
 vim.keymap.set('n', '<C-k>', function()
     vim.cmd("resize -1")
+end)
+
+local function vim_opt_toggle(opt, on, off, name)
+    local message = name
+    if vim.opt[opt]:get() == off then
+        vim.opt[opt] = on
+        message = message .. " Enabled"
+    else
+        vim.opt[opt] = off
+        message = message .. " Disabled"
+    end
+    vim.notify(message, "info", {
+        render = "compact"
+    })
+end
+
+vim.keymap.set('n', '<leader>S', function()
+    vim_opt_toggle("spell", true, false, "Spelling")
+    vim.cmd('syntax off')
+    vim.cmd("TSToggle highlight")
+end)
+
+vim.keymap.set('n', '<leader>Q', function()
+    vim.cmd("BufferLineCloseOthers")
+    vim.cmd("bd")
 end)

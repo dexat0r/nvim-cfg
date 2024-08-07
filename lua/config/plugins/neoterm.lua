@@ -3,7 +3,7 @@ vim.g.neoterm_callbacks = {
     before_create_window = function()
     end,
     before_new = function()
-end,
+    end,
     before_exec = function()
     end,
     after_repl_exec = function()

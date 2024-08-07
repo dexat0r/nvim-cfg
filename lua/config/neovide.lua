@@ -7,4 +7,6 @@ if (vim.g.neovide) then
     if (vim.fn.getcwd() == '/') then
         vim.api.nvim_set_current_dir('~')
     end
+
+    vim.g.neovide_input_macos_alt_is_meta = true
 end

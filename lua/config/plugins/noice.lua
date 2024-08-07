@@ -23,6 +23,7 @@ require("noice").setup({
             on_open = function(win)
                 vim.api.nvim_win_set_config(win, { zindex = -1 })
             end,
+            enabled = true
         },
         cmdline_popup = {
             position = {
