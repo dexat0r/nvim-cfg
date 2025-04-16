@@ -20,3 +20,15 @@ require'nvim-treesitter.configs'.setup {
       enable = true
   }
 }
+
+require'treesitter-context'.setup {
+    on_attach = function (buf)
+        local bufer_options = vim.bo[buf]
+
+        if bufer_options.filetype == "rust" then
+           return false
+        end
+
+        return true
+    end
+}

@@ -1,9 +1,8 @@
 require("luasnip.loaders.from_vscode").load()
 require("neodev").setup()
-local lsp = require('lsp-zero').preset({})
+local lsp = require('lsp-zero')
 local navic = require('nvim-navic')
 local lspconfig = require('lspconfig')
-local n = require('config.notify')
 
 -- LSP Zero Setup -----------------------
 -- mason for downloading lsp servers;
@@ -11,18 +10,21 @@ local n = require('config.notify')
 require("mason").setup()
 require("mason-lspconfig").setup({
     ensure_installed = {
-        'tsserver',
+        'ts_ls',
         'jsonls',
         'lua_ls',
         'omnisharp',
         'emmet_language_server',
-        'ltex'
+        'ltex',
+        'rust_analyzer',
+        'yamlls',
+        'prismals'
     },
     handlers = {
         lsp.default_setup,
         ["lua_ls"] = function()
             lspconfig.lua_ls.setup({
-                on_attach = function() n.notify { "Lua Lsp attached" } end,
+                on_attach = function() vim.notify("Lua Lsp attached") end,
                 settings = {
                     Lua = {
                         diagnostics = {
@@ -32,17 +34,20 @@ require("mason-lspconfig").setup({
                 }
             })
         end,
-        ["tsserver"] = function()
+        ["ts_ls"] = function()
             local api = require("typescript-tools.api")
             require("typescript-tools").setup {
-                on_attach = function() n.notify { "Typescript Lsp attached" } end,
+                on_attach = function() vim.notify("Typescript Lsp attached") end,
                 settings = {
-                    separate_diagnostic_server = false,
-                    -- publish_diagnostic_on = "change",
+                    separate_diagnostic_server = true,
+                    publish_diagnostic_on = "insert_leave",
                     tsserver_locale = "ru",
                     complete_function_calls = true,
                     include_completions_with_insert_text = true,
-                    code_lense = true
+                    code_lense = true,
+                    file_preferences = {
+                        includeCompletionsForModuleExports = false
+                    }
                 },
                 handlers = {
                     ["textDocument/publishDiagnostics"] = api.filter_diagnostics(
@@ -55,14 +60,21 @@ require("mason-lspconfig").setup({
         ["jsonls"] = function()
             lspconfig.jsonls.setup {
                 on_attach = function()
-                    n.notify { "JSON Lsp attached" }
+                    vim.notify("JSON Lsp attached")
+                end
+            }
+        end,
+        ["yamlls"] = function()
+            lspconfig.yamlls.setup {
+                on_attach = function()
+                    vim.notify("YAML Lsp attached")
                 end
             }
         end,
         ["omnisharp"] = function()
             lspconfig.omnisharp.setup {
                 on_attach = function()
-                    n.notify { "CSharp Lsp attached!" }
+                    vim.notify("CSharp Lsp attached!")
                 end,
                 handlers = { ['textDocument/definition'] = require('omnisharp_extended').handler }
             }
@@ -70,7 +82,7 @@ require("mason-lspconfig").setup({
         ["emmet_language_server"] = function()
             lspconfig.emmet_language_server.setup({
                 on_attach = function()
-                    n.notify { "Emmet attached!" }
+                    vim.notify("Emmet attached!")
                 end,
                 filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "pug", "typescriptreact" },
                 -- Read more about this options in the [vscode docs](https://code.visualstudio.com/docs/editor/emmet#_emmet-configuration).
@@ -100,9 +112,18 @@ require("mason-lspconfig").setup({
         ["ltex"] = function()
             lspconfig.ltex.setup({
                 on_attach = function()
-                    n.notify { "Spell checker attached!" }
+                    vim.notify("Spell checker attached!")
                 end,
             })
+        end,
+        ["rust_analyzer"] = function()
+            lspconfig["rust_analyzer"].setup({})
+        end,
+        ["html"] = function()
+            lspconfig["html"].setup({})
+        end,
+        ["prismals"] = function ()
+            lspconfig["prismals"].setup({})
         end
     }
 })

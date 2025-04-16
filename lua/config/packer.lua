@@ -85,7 +85,7 @@ return require('packer').startup(function(use)
         "stevearc/conform.nvim",
     })
 
-    use ({
+    use({
         "folke/trouble.nvim",
         cmd = "Trouble",
         opts = {},
@@ -157,5 +157,32 @@ return require('packer').startup(function(use)
     }
     use {
         "Hoffs/omnisharp-extended-lsp.nvim"
+    }
+    use "sindrets/diffview.nvim"
+    use { "iagorrr/noctishc.nvim" }
+    use { "dmmulroy/ts-error-translator.nvim" }
+    use {
+        "nvim-treesitter/nvim-treesitter-context",
+        dependencies = { "nvim-treesitter/nvim-treesitter" },
+        config = function()
+            require("treesitter-context").setup()
+        end
+    }
+    use 'nanotee/sqls.nvim'
+    use { 'nvimdev/hlsearch.nvim', event = 'BufRead', config = function()
+        require('hlsearch').setup()
+    end }
+    use {
+        "antosha417/nvim-lsp-file-operations",
+        requires = {
+            "nvim-lua/plenary.nvim",
+            "nvim-tree/nvim-tree.lua",
+        },
+        config = function()
+            require("lsp-file-operations").setup()
+        end,
+    }
+    use {
+	"xiyaowong/transparent.nvim"
     }
 end)

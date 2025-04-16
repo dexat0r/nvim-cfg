@@ -11,8 +11,6 @@ vim.opt.scrolloff = 8;
 vim.opt.listchars = { space = '·', tab = '→ ' }
 
 vim.opt.equalalways = false
--- vim.opt.winfixheight = true
--- vim.opt.winfixwidth = true
 
 vim.opt.spell = false
 vim.opt.spelloptions = "camel"

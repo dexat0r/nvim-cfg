@@ -1,6 +1,6 @@
 require("lualine").setup({
     options = {
-        theme = "kanagawa",
+        theme = "noctishc",
     },
     sections = {
         lualine_c = {
